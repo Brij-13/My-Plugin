@@ -1,0 +1,16 @@
+{
+    "name": "lenovo/brij-plugin",
+    "description": "This is my first plugin",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Brij",
+            "email": "brij.mandaliya1998@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\": "./inc"}
+    }
+}
