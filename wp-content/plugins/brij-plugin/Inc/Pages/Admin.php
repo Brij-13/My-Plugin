@@ -5,7 +5,7 @@ namespace Inc\Pages;
 * @package brij plugin
 */
 
-class Admin
+class Admin extends BaseController
 {
     
     public function register() {
@@ -19,7 +19,7 @@ class Admin
 
     public function admin_index()
     {
-        require_once PLUGIN_PATH .'template/admin.php';
+        require_once $this->plugin_path .'template/admin.php';
     }
 
 }
