@@ -6,7 +6,7 @@
 
 namespace Inc\Base;
 
-class Admin
+class Enqueue
 {
     
     public function register() {
@@ -14,7 +14,7 @@ class Admin
     }
 
     function enqueue() {
-        wp_enqueue_style( 'mypluginstyle', PLUGIN_URL. '/assets/mystyle.css' );
-        wp_enqueue_script( 'mypluginscript', PLUGIN_URL. '/assets/myscript.js' );
+        wp_enqueue_style( 'mypluginstyle', PLUGIN_URL. 'assets/mystyle.css' );
+        wp_enqueue_script( 'mypluginscript', PLUGIN_URL. 'assets/myscript.js' );
     }    
 }
