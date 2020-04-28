@@ -6,9 +6,9 @@
 
 namespace Inc\Base;
 
-use \Inc\Base\BaseContoller;
+use \Inc\Base\BaseController;
 
-class Enqueue extends BaseContoller
+class Enqueue extends BaseController
 {
     
     public function register() {

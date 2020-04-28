@@ -1,5 +1,9 @@
 <?php
-namespace Inc\Pages;    
+namespace Inc\Pages;
+
+ use \Inc\Base\BaseController;
+ use \Inc\Api\SettingsApi;
+ use \Inc\Api\Callbacks\AdminCallbacks;
 
 /*
 * @package brij plugin
@@ -7,19 +11,118 @@ namespace Inc\Pages;
 
 class Admin extends BaseController
 {
-    
+    public $settings;
+
+    public $callbacks;
+
+    public $pages = array();
+
+    public $subpages = array();
+
+    public $setSettings = array();
+
+    public $setSection = array();
+
+    public $setFields = array();
+
     public function register() {
         
-        add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
+        $this->settings = new SettingsApi();
+        $this->callbacks = new AdminCallbacks();
+        $this->setPages();
+        $this->setSubpages();
+        $this->settings->addPages( $this->pages )->withSubPage('Dashboard')->addSubPages($this->subpages)->register();
     }
 
-    public function add_admin_pages(){
-        add_menu_page( 'Brij Plugin', 'Brij', 'manage_options', 'brij_plugin', array( $this, 'admin_index'), 'dashicons-businessman',  110 );
-    }   
-
-    public function admin_index()
+    public function setPages()
     {
-        require_once $this->plugin_path .'template/admin.php';
+        $this->pages = array (
+            array(
+                 'page_title' => 'Brij Plugin',
+                 'menu_title' => 'Brij',
+                 'capability' => 'manage_options',
+                 'menu_slug' => 'brij_plugin',
+                 'callback' => array($this->callbacks, 'adminDashboard'),
+                 'icon_url' => 'dashicons-businessman',
+                 'position' => 10
+             )
+         );
+    }
+    
+    public function setSubpages()
+    {
+        $this->subpages=array(
+            array(
+
+                'parent_slug' =>'brij_plugin',
+                'page_title' => 'Custom Post Type',
+                'menu_title' => 'CPT',
+                'capability' => 'manage_options',
+                'menu_slug' => 'brij_cpt',
+                'callback' => array($this->callbacks, 'cptManager')
+            ),
+            array(
+
+                'parent_slug' => 'brij_plugin',
+                'page_title' => 'Custom Taxonomies',
+                'menu_title' => 'Taxonomies',
+                'capability' => 'manage_options',
+                'menu_slug' => 'brij_taxonomies',
+                'callback' => array($this->callbacks, 'taxonomiesManager')
+            ),
+            array(
+
+                'parent_slug' => 'brij_plugin',
+                'page_title' => 'Custom Widgets',
+                'menu_title' => 'Widgets',
+                'capability' => 'manage_options',
+                'menu_slug' =>  'brij_widgets',
+                'callback' => array($this->callbacks, 'widgetsManager')
+            )
+            );
+    }
+
+    public function setSettings()
+    {
+        $args = array(
+            array(
+                'option_group'=>'brij_options_group',
+                'option_name'=>'text_example',
+                'callback'=>array($this->callbacks, 'brijOptionsGroup')
+            )
+            );
+            $this->settings->setSettings($args);
+    }
+
+    public function setSection()
+    {
+        $args = array(
+            array(
+                'id'=>'brij_admin_index',
+                'title'=>'Settings',
+                'callback'=>array($this->callbacks, 'brijAdminSection'),
+                'page'=>'brij_plugin'
+            )
+            );
+            $this->section->setSection($args);
+    }
+
+    public function setFields()
+    {
+        $args = array(
+            array(
+                'id'=>'text_example',
+                'title'=>'Text Example',
+                'callback'=>array($this->callbacks, 'brijTextExample'),
+                'page'=>'brij_plugin',
+                'section'=>'brij_admin_index',
+                'args'=>array(
+                    'label_for'=>'text_example',
+                    'class'=>'example-class'
+                )
+            )
+            );
+            $this->fields->setFields($args);
     }
 
 }
