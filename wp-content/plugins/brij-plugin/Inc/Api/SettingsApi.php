@@ -1,10 +1,10 @@
 <?php    
-
+namespace Inc\Api;
 /*
 * @package brij plugin
 */
 
-namespace Inc\Api;
+
 
 class SettingsApi
 {
@@ -25,7 +25,7 @@ class SettingsApi
         }
 
         if( ! empty($this->settings)){
-            add_action('admin_menu', array($this, 'addAdminMenu'));
+            add_action('admin_init', array($this, 'registerCustomFields'));
         }
     }
 

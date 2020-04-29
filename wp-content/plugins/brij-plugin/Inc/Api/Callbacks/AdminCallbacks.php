@@ -35,12 +35,24 @@ class AdminCallbacks extends BaseController
 
     public function brijAdminSection()
     {
-        echo "Check this section!";
+        echo 'Check this section!';
     }
 
     public function brijTextExample()
     {
-        $value = esc_attr(get_option('text_example'));
-        echo '<input type="text" class="regular_text" name="text_example" value="'.$value.'" placeholder="Write somthing here...">';
+        $value = esc_attr(get_option( 'text_example' ));
+        echo '<input type="text" class="regular-text" name="text_example" value="' .$value. '" placeholder="Write somthing here...">';
+    }
+
+    public function brijFirstName()
+    {
+        $value = esc_attr(get_option( 'first_name' ));
+        echo '<input type="text" class="regular-text" name="first_name" value="' .$value. '" placeholder="Write somthing here...">';
+    }
+
+    public function brijText()
+    {
+        $value = esc_attr(get_option('text'));
+        echo '<input type="text" class="regular-text" name="text" value="' .$value. '" placeholder="Write somthing here...">';
     }
 }

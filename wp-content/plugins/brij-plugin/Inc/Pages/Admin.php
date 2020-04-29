@@ -1,9 +1,9 @@
 <?php
 namespace Inc\Pages;
 
- use \Inc\Base\BaseController;
- use \Inc\Api\SettingsApi;
- use \Inc\Api\Callbacks\AdminCallbacks;
+ use Inc\Base\BaseController;
+ use Inc\Api\SettingsApi;
+ use Inc\Api\Callbacks\AdminCallbacks;
 
 /*
 * @package brij plugin
@@ -31,6 +31,10 @@ class Admin extends BaseController
         $this->callbacks = new AdminCallbacks();
         $this->setPages();
         $this->setSubpages();
+        // $this->setSettings();
+        // $this->setSections();
+        // $this->setFields();
+
         $this->settings->addPages( $this->pages )->withSubPage('Dashboard')->addSubPages($this->subpages)->register();
     }
 
@@ -44,7 +48,7 @@ class Admin extends BaseController
                  'menu_slug' => 'brij_plugin',
                  'callback' => array($this->callbacks, 'adminDashboard'),
                  'icon_url' => 'dashicons-businessman',
-                 'position' => 10
+                 'position' => 110
              )
          );
     }
@@ -86,15 +90,20 @@ class Admin extends BaseController
     {
         $args = array(
             array(
+                'option_group' => 'brij_options_group',
+                'option_name' => 'text_example',
+                'callback' => array($this->callbacks, 'brijOptionsGroup')
+            ),
+            array(
                 'option_group'=>'brij_options_group',
-                'option_name'=>'text_example',
-                'callback'=>array($this->callbacks, 'brijOptionsGroup')
+                'option_name'=>'first_name'
             )
+
             );
             $this->settings->setSettings($args);
     }
 
-    public function setSection()
+    public function setSections()
     {
         $args = array(
             array(
@@ -104,7 +113,7 @@ class Admin extends BaseController
                 'page'=>'brij_plugin'
             )
             );
-            $this->section->setSection($args);
+            $this->settings->setSections( $args );
     }
 
     public function setFields()
@@ -120,9 +129,31 @@ class Admin extends BaseController
                     'label_for'=>'text_example',
                     'class'=>'example-class'
                 )
-            )
+                ),
+                array(
+                    'id' => 'first_name',
+                    'title' => 'First Name',
+                    'callback' => array( $this->callbacks, 'brijFirstName' ),
+                    'page' => 'brij_plugin',
+                    'section' => 'brij_admin_index',
+                    'args' => array(
+                        'label_for' => 'first_name',
+                        'class' => 'example-class'
+                    )
+                ),
+                array(
+                    'id' => 'text',
+                    'title' => 'Text',
+                    'callback' => array( $this->callbacks, 'brijText' ),
+                    'page' => 'brij_plugin',
+                    'section' => 'brij_admin_index',
+                    'args' => array(
+                        'label_for' => 'text',
+                        'class' => 'example-class'
+                    )
+                )
             );
-            $this->fields->setFields($args);
+            $this->settings->setFields($args);
     }
 
 }
