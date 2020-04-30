@@ -685,6 +685,39 @@ function twentytwenty_get_customizer_color_vars() {
 	return $colors;
 }
 
+function more($more)
+{
+	$more ='<a href="'.get_the_permalink().'">More</a>';
+	return $more;
+
+}
+add_filter('excerpt_more','more');
+
+function create_posttype() {
+ 
+    register_post_type( 'movies',
+    // CPT Options
+        array(
+            'labels' => array(
+                'name' => __( 'Movies' ),
+                'singular_name' => __( 'Movie' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'movies'),
+            'show_in_rest' => true,
+ 
+        )
+    );
+}
+// Hooking up our function to theme setup
+add_action( 'init', 'create_posttype' );
+
+function twentytwenty_abc($length){
+	return 5;
+}
+add_filter('excerpt_length','abc');
+
 /**
  * Get an array of elements.
  *
@@ -757,4 +790,6 @@ function twentytwenty_get_elements_array() {
 	* @param array Array of elements
 	*/
 	return apply_filters( 'twentytwenty_get_elements_array', $elements );
+
+
 }
