@@ -65,7 +65,7 @@ class Admin extends BaseController
                 'menu_slug' => 'brij_cpt',
                 'callback' => array($this->callbacks, 'cptManager')
             ),
-            array(
+            array(  
 
                 'parent_slug' => 'brij_plugin',
                 'page_title' => 'Custom Taxonomies',
@@ -90,12 +90,12 @@ class Admin extends BaseController
     {
         $args = array(
             array(
-                'option_group' => 'brij_options_group',
+                'option_group' => 'brij_plugin_settings',
                 'option_name' => 'text_example',
                 'callback' => array($this->callbacks, 'brijOptionsGroup')
             ),
             array(
-                'option_group'=>'brij_options_group',
+                'option_group'=>'brij_plugin_settings',
                 'option_name'=>'first_name'
             )
 
